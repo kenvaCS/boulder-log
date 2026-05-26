@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useClimbsContext } from '../context/ClimbsContext'
-import type { Climb } from '..types/index'
+import type { Climb } from '../features/climbs/types'
 
 const GRADES = ['V0','V1','V2','V3','V4','V5','V6','V7','V8','V9','V10','V11','V12','V13','V14','V15','V16','V17']
 
@@ -50,8 +50,9 @@ export default function DetailPage() {
         setForm(prev => prev ? ({...prev, isProject: e.target.checked }) : prev)
     }
 
-    function handleSave(e: React.FormEvent) {
+    function handleSave(e: React.SubmitEvent) {
         e.preventDefault()
+        if (!form) return
         if (!form.routeName.trim()) return
         updateClimb(id!, form)
         navigate('/')

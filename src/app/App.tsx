@@ -1,10 +1,10 @@
-import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import NavBar from './components/NavBar'
-import LogPage from './pages/LogPage'
-import StatsPage from './pages/StatsPage'
-import GoalsPage from './pages/GoalsPage'
-import DetailPage from './pages/DetailPage'
+import NavBar from '../layout/Navbar/NavBar'
+import LogPage from '../pages/LogPage'
+import StatsPage from '../pages/StatsPage'
+import GoalsPage from '../pages/GoalsPage'
+import DetailPage from '../pages/DetailPage'
+import TrainingPage from '../pages/TrainingPage'
 
 
 export default function App() {
@@ -17,6 +17,7 @@ export default function App() {
                     <Route path="/climb/:id" element={<DetailPage />} />
                     <Route path="/stats" element={<StatsPage />} />
                     <Route path="/goals" element={<GoalsPage />} />
+                    <Route path="/training" element={<TrainingPage />} />
                 </Routes>
             </main>
         </div>

@@ -1,6 +1,7 @@
-import { createContext, useContext, ReactNode } from 'react'
-import { useClimbs } from '../hooks/useClimbs'
-import type { Climb } from '../types/index'
+import { createContext, useContext } from 'react'
+import type { ReactNode } from 'react'
+import { useClimbs } from '../features/climbs/hooks/useClimbs'
+import type { Climb } from '../features/climbs/types'
 
 interface ClimbsContextType {
     climbs: Climb[]

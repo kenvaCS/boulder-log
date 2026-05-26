@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import type { Climb } from '../types/index'
+import type { Climb } from '../types'
 
 interface Props {
     climb: Climb
@@ -10,13 +10,13 @@ export default function ClimbCard({ climb, onDelete }: Props) {
     const navigate = useNavigate()
 
     return (
-    <div className="bg-white rounded-xl shadow-sm p-4 flex flex-col gap-2">
+    <div 
+        className="bg-white rounded-xl shadow-sm p-4 flex flex-col gap-2 cursor-pointer transition-[box-shadow, transform] duration-150 hover:shadow-md hover:ring-2 hover:ring-violet-400 hover:-translate-y-0.5"
+        onClick={() => navigate(`/climb/${climb.id}`)}
+    >
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-                <span 
-                    className="font-medium"
-                    onClick={() => navigate(`/climb/${climb.id}`)}
-                >
+                <span className="font-medium">
                     {climb.routeName}
                 </span>
                 <span className="text-xs bg-gray-100 text-gray-700 rounded-full px-2 py-0.5">

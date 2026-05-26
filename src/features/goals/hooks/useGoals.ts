@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import type { Goal } from '../types/index'
+import type { Goal } from '../../climbs/types'
 
 const STORAGE_KEY = 'boulder-log-goals'
 

@@ -1,8 +1,7 @@
-import { useClimbsContext } from '../context/ClimbsContext'
-import type { Climb } from '../types/index'
+import { useClimbsContext } from '../../../context/ClimbsContext'
 
 
-export function useExport() {
+export function useClimbsExport() {
     const { climbs } = useClimbsContext()
     
     function exportToCSV() {

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useGoals } from '../hooks/useGoals'
+import { useGoals } from '../features/goals/hooks/useGoals'
 import { useClimbsContext } from '../context/ClimbsContext'
 
 

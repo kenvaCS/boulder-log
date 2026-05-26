@@ -1,5 +1,5 @@
 import { useClimbsContext } from '../context/ClimbsContext'
-import { useClimbsStats } from '../hooks/useClimbsStats'
+import { useClimbsStats } from '../features/climbs/hooks/useClimbsStats'
 import GradeChart from '../components/charts/GradeChart'
 import SendTypeBar from '../components/charts/SendTypeBar'
 

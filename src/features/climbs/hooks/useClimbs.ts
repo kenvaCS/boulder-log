@@ -1,20 +1,6 @@
 import { useState, useEffect } from 'react'
-import type { Climb } from '../types/index'
-
-const STORAGE_KEY = 'boulder-log-climbs'
-
-function loadClimbs(): Climb[] {
-    try {
-        const raw = localStorage.getItem(STORAGE_KEY)
-        return raw ? JSON.parse(raw): []
-    } catch {
-        return []
-    }
-}
-
-function saveClimbs(climbs: Climb[]) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(climbs))
-}
+import { loadClimbs, saveClimbs } from '../api'
+import type { Climb } from '../types'
 
 export function useClimbs() {
     const [climbs, setClimbs] = useState<Climb []>(loadClimbs)

@@ -1,9 +1,9 @@
-import LogForm from '../components/LogForm'
-import ClimbList from '../components/ClimbList'
-import { useExport } from '../hooks/useExport'
+import LogForm from '../features/climbs/components/LogForm'
+import ClimbList from '../features/climbs/components/ClimbList'
+import { useClimbsExport } from '../features/climbs/hooks/useClimbsExport'
 
 export default function LogPage() {
-    const { exportToCSV } = useExport()
+    const { exportToCSV } = useClimbsExport()
 
     return (
         <div className="flex flex-col gap-6">

@@ -30,6 +30,14 @@ export default function NavBar() {
                     >
                         Goals
                     </NavLink>
+                    <NavLink
+                        to="/training"
+                        className={({ isActive }) =>
+                            isActive ? 'text-sm font-medium text-gray-900' : 'text-sm text-gray-400 hover:text-gray-600'
+                        }
+                    >
+                        Training
+                    </NavLink>
                 </div>
             </div>
         </nav>
