@@ -8,8 +8,11 @@ const EMPTY_FORM = {
 }
 
 export default function ExerciseForm() {
-    const { addExercise } = useTrainingContext()
+    const { addExercise, exercises } = useTrainingContext()
     const [form, setForm] = useState(EMPTY_FORM)
+
+    const isDuplicate = form.name.trim() !== '' &&
+        exercises.some(ex => ex.name.toLowerCase() === form.name.trim().toLowerCase())
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const { name, value, type } = e.target as HTMLInputElement
@@ -63,9 +66,13 @@ export default function ExerciseForm() {
                 className="border rounded-lg px-3 py-2 text-sm"
             />
 
+            {isDuplicate && (
+                <p className="text-xs text-amber-600">An exercise named "{form.name.trim()}" already exists.</p>
+            )}
+
             <button
                 type="submit"
-                disabled={!form.name.trim()}
+                disabled={!form.name.trim() || isDuplicate}
                 className="bg-gray-900 text-white rounded-lg px-4 py-2 text-sm font-medium disabled:opacity-40"
             >
                 Add exercise

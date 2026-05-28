@@ -8,7 +8,7 @@ interface ClimbsContextType {
     addClimb: (data: Omit<Climb, 'id'>) => void
     updateClimb: (id: string, data: Partial<Climb>) => void
     deleteClimb: (id: string) => void
-    filterClimbs: (query: string, grade?: string) => Climb[]
+    filterClimbs: (query: string, minGrade?: string, maxGrade?: string) => Climb[]
 }
 
 const ClimbsContext = createContext<ClimbsContextType | null>(null)

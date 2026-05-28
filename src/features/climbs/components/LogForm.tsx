@@ -50,17 +50,18 @@ export default function LogForm() {
                 className="border rounded-lg px-3 py-2 text-sm"
             />
 
-            <div className="flex gap-3">
-                <select
-                    name="grade"
-                    value={form.grade}
-                    onChange={handleChange}
-                    className="border rounded-lg px-3 py-2 text-sm flex-1"
-                >
-                    {GRADES.map(g => (
-                        <option key={g} value={g}>{g}</option>
-                    ))}
-                </select>
+            <div className="flex gap-3 items-end">
+                <div className="flex flex-col gap-1 flex-1">
+                    <span className="text-sm font-medium">{form.grade}</span>
+                    <input
+                        type="range"
+                        min={0}
+                        max={GRADES.length - 1}
+                        value={GRADES.indexOf(form.grade)}
+                        onChange={e => setForm(prev => ({ ...prev, grade: GRADES[Number(e.target.value)] }))}
+                        className="w-full accent-gray-900"
+                    />
+                </div>
 
                 <input
                     name="date"

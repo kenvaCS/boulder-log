@@ -24,14 +24,18 @@ export function useClimbs() {
         setClimbs(prev => prev.filter(c => c.id !== id))
     }
 
-    function filterClimbs(query: string, grade?: string) {
+    function filterClimbs(query: string, minGrade?: string, maxGrade?: string) {
+        const GRADE_ORDER = ['V0','V1','V2','V3','V4','V5','V6','V7','V8','V9','V10','V11','V12','V13','V14','V15','V16','V17']
         return climbs.filter(c => {
-            const matchesQuery = 
+            const matchesQuery =
                 query === '' ||
                 c.routeName.toLowerCase().includes(query.toLowerCase()) ||
                 c.location.toLowerCase().includes(query.toLowerCase()) ||
                 c.notes.toLowerCase().includes(query.toLowerCase())
-            const matchesGrade = !grade || c.grade === grade
+            const gradeIdx = GRADE_ORDER.indexOf(c.grade)
+            const minIdx = minGrade ? GRADE_ORDER.indexOf(minGrade) : 0
+            const maxIdx = maxGrade ? GRADE_ORDER.indexOf(maxGrade) : GRADE_ORDER.length - 1
+            const matchesGrade = gradeIdx === -1 || (gradeIdx >= minIdx && gradeIdx <= maxIdx)
             return matchesQuery && matchesGrade
         })
     }
