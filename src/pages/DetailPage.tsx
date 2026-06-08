@@ -30,6 +30,17 @@ export default function DetailPage() {
         }
     }, [climb])
 
+    const isDirty = form !== null && (
+        form.routeName !== climb?.routeName ||
+        form.grade !== climb?.grade ||
+        form.date !== climb?.date ||
+        form.location !== climb?.location ||
+        form.attempts !== climb?.attempts ||
+        form.notes !== climb?.notes ||
+        form.isProject !== climb?.isProject ||
+        form.sentAt !== climb?.sentAt
+    )
+
     if (!climb || !form) {
         return (
             <div className="text-sm text-gray-400 text-center py-8">
@@ -50,7 +61,7 @@ export default function DetailPage() {
         setForm(prev => prev ? ({...prev, isProject: e.target.checked }) : prev)
     }
 
-    function handleSave(e: React.SubmitEvent) {
+    function handleSave(e: React.FormEvent) {
         e.preventDefault()
         if (!form) return
         if (!form.routeName.trim()) return
@@ -67,13 +78,6 @@ export default function DetailPage() {
         <form onSubmit={handleSave} className="flex flex-col gap-4 bg-white p-6 rounded-xl shadow-sm">
             <div className="flex items-center justify-between">
                 <h2 className="text-lg font-medium">Edit climb</h2>
-                <button
-                    type="button"
-                    onClick={() => navigate('/')}
-                    className="text-sm text-gray-400 hover:text-gray-600"
-                >
-                    back
-                </button>
             </div>
 
             <input
@@ -143,7 +147,8 @@ export default function DetailPage() {
             <div className="flex gap-3">
                 <button
                     type="submit"
-                    className="flex-1 bg-gray-900 text-white rounded-lg px-4 py-2 text-sm font-medium"
+                    disabled={!isDirty}
+                    className={`flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${isDirty ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
                 >
                     Save changes
                 </button>

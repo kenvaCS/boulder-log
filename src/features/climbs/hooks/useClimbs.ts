@@ -5,23 +5,25 @@ import type { Climb } from '../types'
 export function useClimbs() {
     const [climbs, setClimbs] = useState<Climb []>(loadClimbs)
 
-    useEffect(() => {
-        saveClimbs(climbs)
-    }, [climbs]) // dependency array
-
+    // no use for useEffect
     function addClimb(data: Omit<Climb, 'id'>) {
         const newClimb: Climb = {...data, id: crypto.randomUUID() }
-        setClimbs(prev => [newClimb, ...prev])
+        const updated = [newClimb, ...climbs]
+        // technically if await, then stale closure risk, but here should be fine.
+        setClimbs(updated)
+        saveClimbs(updated)
     }
 
     function updateClimb(id: string, data: Partial<Climb>) {
-        setClimbs(prev => 
-            prev.map(c => (c.id == id ? {...c, ...data } : c))
-        )
+        const updated = climbs.map(c => (c.id === id ? {...c, ...data } : c))
+        setClimbs(updated)
+        saveClimbs(updated)
     }
 
     function deleteClimb(id: string) {
-        setClimbs(prev => prev.filter(c => c.id !== id))
+        const updated = climbs.filter(c => c.id !== id)
+        setClimbs(updated)
+        saveClimbs(updated)
     }
 
     function filterClimbs(query: string, minGrade?: string, maxGrade?: string) {

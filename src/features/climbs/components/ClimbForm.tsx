@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useClimbsContext } from '../../../context/ClimbsContext'
+import { usePatternsContext } from '../../../context/PatternsContext'
 
 const GRADES = ['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17']
 
@@ -13,11 +15,22 @@ const EMPTY_FORM = {
     photos: [] as string[],
     isProject: false,
     sentAt: undefined as string | undefined,
+    patternIds: [] as string[],
 }
 
-export default function LogForm() {
+export default function ClimbForm() {
     const { addClimb } = useClimbsContext()
+    const { patterns } = usePatternsContext() // reading patterns
     const [form, setForm] = useState(EMPTY_FORM)
+
+    function handlePatternToggle(id: string) {
+        setForm(prev => ({
+            ...prev,
+            patternIds: prev.patternIds.includes(id)
+                ? prev.patternIds.filter(p => p !== id)
+                : [...prev.patternIds, id]
+        }))
+    }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
         const { name, value, type } = e.target
@@ -39,7 +52,7 @@ export default function LogForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 bg-white p-6 rounded-xl shadow-sm">
+        <form onSubmit={handleSubmit} autoComplete="off" className="flex flex-col gap-4 bg-white p-6 rounded-xl shadow-sm">
             <h2 className="text-lg font-medium">Log a climb</h2>
 
             <input
@@ -76,17 +89,18 @@ export default function LogForm() {
                 name="location"
                 value={form.location}
                 onChange={handleChange}
-                placeholder="Location / crag"
+                placeholder="Location"
                 className="border rounded-lg px-3 py-2 text-sm"
             />
 
             <input
                 name="attempts"
-                type="number"
-                min={1}
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 value={form.attempts}
                 onChange={handleChange}
-                placeholder="Attempts"
+                placeholder="0"
                 className="border rounded-lg px-3 py-2 text-sm"
             />
 
@@ -94,10 +108,26 @@ export default function LogForm() {
                 name="notes"
                 value={form.notes}
                 onChange={handleChange}
-                placeholder="Notes / beta"
+                placeholder="Notes"
                 rows={3}
                 className="border rounded-lg px-3 py-2 text-sm resize-none"
             />
+
+            {patterns.length > 0 && (
+                <div className="flex flex-col gap-1">
+                    <span className="text-sm font-medium">Patterns</span>
+                    {patterns.map(pattern => (
+                        <label key={pattern.id} className="flex items-center gap-2 text-sm">
+                            <input
+                                type="checkbox"
+                                checked={form.patternIds.includes(pattern.id)}
+                                onChange={() => handlePatternToggle(pattern.id)}
+                            />
+                            {pattern.name}
+                        </label>
+                    ))}
+                </div>
+            )}
 
             <label className="flex items-center gap-2 text-sm">
                 <input

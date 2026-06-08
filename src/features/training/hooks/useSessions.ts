@@ -15,7 +15,7 @@ export function useSessions() {
 
    function updateSession(id: string, data: Partial<TrainingSession>) {
         setSessions(prev => 
-            prev.map(c => (c.id == id ? {...c, ...data} : c))
+            prev.map(c => (c.id === id ? {...c, ...data} : c))
         )
     }
 

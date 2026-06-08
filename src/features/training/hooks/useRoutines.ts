@@ -16,7 +16,7 @@ export function useRoutines() {
 
    function updateRoutine(id: string, data: Partial<TrainingRoutine>) {
         setRoutines(prev => 
-            prev.map(c => (c.id == id ? {...c, ...data} : c))
+            prev.map(c => (c.id === id ? {...c, ...data} : c))
         )
     }
 

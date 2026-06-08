@@ -22,7 +22,7 @@ export function useExercises() {
         // id: string here because that's how we identify which to change (not coming through the data from UI)
    function updateExercise(id: string, data: Partial<Exercise>) {
         setExercises(prev => 
-            prev.map(c => (c.id == id ? {...c, ...data} : c))
+            prev.map(c => (c.id === id ? {...c, ...data} : c))
         )
             // map takes a function, c is input, return is ()
             // returns new array populated with results of calling provided

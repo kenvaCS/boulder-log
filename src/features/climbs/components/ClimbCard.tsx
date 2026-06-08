@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import type { Climb } from '../types'
+import { usePatternsContext } from '../../../context/PatternsContext'
 
 interface Props {
     climb: Climb
@@ -8,10 +9,12 @@ interface Props {
 
 export default function ClimbCard({ climb, onDelete }: Props) {
     const navigate = useNavigate()
+    const { patterns } = usePatternsContext()
+    const climbPatterns = patterns.filter(p => climb.patternIds?.includes(p.id))
 
     return (
     <div 
-        className="bg-white rounded-xl shadow-sm p-4 flex flex-col gap-2 cursor-pointer transition-[box-shadow, transform] duration-150 hover:shadow-md hover:ring-2 hover:ring-violet-400 hover:-translate-y-0.5"
+        className="bg-white rounded-xl shadow-sm p-4 flex flex-col gap-2 cursor-pointer transition-[box-shadow, transform] duration-150 hover:shadow-md hover:ring-2 hover:ring-grey-400 hover:-translate-y-0.5"
         onClick={() => navigate(`/climb/${climb.id}`)}
     >
         <div className="flex items-center justify-between">
@@ -27,9 +30,18 @@ export default function ClimbCard({ climb, onDelete }: Props) {
                         project
                     </span>
                 )}
+                {climbPatterns.map(p => (
+                    <span 
+                        key={p.id} 
+                        className="text-xs bg-violet-100 text-violet-700 rounded-full px-2 py-0.5"
+                        onClick={(e) => { e.stopPropagation(); navigate(`/pattern/${p.id}`) }} 
+                    >
+                        {p.name}
+                    </span>
+                ))}
             </div>
             <button
-                onClick={() => onDelete(climb.id)}
+                onClick={(e) => {e.stopPropagation(); onDelete(climb.id)}}
                 className="text-gray-400 hover:text-red-500 text-sm"
             >
                 delete
