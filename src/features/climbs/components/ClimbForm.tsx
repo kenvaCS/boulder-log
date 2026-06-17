@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useClimbsContext } from '../../../context/ClimbsContext'
 import { usePatternsContext } from '../../../context/PatternsContext'
@@ -18,10 +18,19 @@ const EMPTY_FORM = {
     patternIds: [] as string[],
 }
 
+const STORAGE_KEY = "climbFormDraft"
+
 export default function ClimbForm() {
     const { addClimb } = useClimbsContext()
     const { patterns } = usePatternsContext() // reading patterns
-    const [form, setForm] = useState(EMPTY_FORM)
+    const [form, setForm] = useState(() => {
+        const draft = localStorage.getItem(STORAGE_KEY);
+        return draft ? JSON.parse(draft): EMPTY_FORM
+    })
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(form));
+    },[form]);
 
     function handlePatternToggle(id: string) {
         setForm(prev => ({

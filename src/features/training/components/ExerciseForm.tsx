@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTrainingContext } from '../../../context/TrainingContext'
 
 const EMPTY_FORM = {
@@ -7,12 +7,22 @@ const EMPTY_FORM = {
     rpe: undefined as number | undefined,
 }
 
+const STORAGE_KEY = "exerciseFormDraft";
+
 export default function ExerciseForm() {
     const { addExercise, exercises } = useTrainingContext()
-    const [form, setForm] = useState(EMPTY_FORM)
+    const [form, setForm] = useState(() => {
+        const draft = localStorage.getItem(STORAGE_KEY)
+        return draft ? JSON.parse(draft) : EMPTY_FORM
+    })
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(form));
+    }, [form])
 
     const isDuplicate = form.name.trim() !== '' &&
         exercises.some(ex => ex.name.toLowerCase() === form.name.trim().toLowerCase())
+
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const { name, value, type } = e.target as HTMLInputElement

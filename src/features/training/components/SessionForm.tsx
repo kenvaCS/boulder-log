@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTrainingContext } from '../../../context/TrainingContext'
 import type { SessionExercise } from '../types'
 
@@ -11,9 +11,19 @@ const EMPTY_FORM = {
     notes: '',
 }
 
+const STORAGE_KEY="sessionFormDraft";
+
 export default function SessionForm() {
     const { routines, exercises, addSession } = useTrainingContext()
-    const [form, setForm] = useState(EMPTY_FORM)
+    const [form, setForm] = useState(() => {
+        const draft = localStorage.getItem(STORAGE_KEY)
+        return draft ? JSON.parse(draft): EMPTY_FORM
+    })
+    
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(form));
+    },[form])
+
 
     function handleRoutineChange(e: React.ChangeEvent<HTMLSelectElement>) {
         const routineId = e.target.value

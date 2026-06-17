@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { usePatternsContext } from "../../../context/PatternsContext"
 import type { Pattern } from "../types"
 
@@ -11,9 +11,19 @@ const EMPTY_FORM = {
     video: [] as string[],
 }
 
+const STORAGE_KEY = "patternFormDraft"
+
 export default function PatternForm() {
     const { addPattern } = usePatternsContext()
-    const [ form, setForm ] = useState(EMPTY_FORM)
+    const [ form, setForm ] = useState(() => {
+        const draft = localStorage.getItem(STORAGE_KEY);
+        return draft ? JSON.parse(draft) : EMPTY_FORM
+    })
+
+    // side effect: save out form to external browser localStorage for persistence across remounts
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(form));
+    }, [form])
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
         const { name, value } = e.target

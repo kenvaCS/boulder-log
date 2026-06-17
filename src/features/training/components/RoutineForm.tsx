@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { RoutineExercise } from '../types'
 
 import { useTrainingContext } from '../../../context/TrainingContext'
@@ -8,6 +8,8 @@ const EMPTY_FORM = {
     exercises: [] as RoutineExercise[], // preferred TS way to typecast
     notes: '',
 }
+
+const STORAGE_KEY = "routineFormDraft";
 
 const EMPTY_EXERCISE_ROW = {
     exerciseId: '',
@@ -19,8 +21,15 @@ const EMPTY_EXERCISE_ROW = {
 
 export default function RoutineForm() {
     const { exercises, addRoutine } = useTrainingContext()
-    const [form, setForm] = useState(EMPTY_FORM)
+    const [form, setForm] = useState(() => {
+        const draft = localStorage.getItem(STORAGE_KEY)
+        return draft ? JSON.parse(draft) : EMPTY_FORM
+    })
     const [row, setRow] = useState(EMPTY_EXERCISE_ROW)
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(form));
+    }, [form])
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const { name, value } = e.target
