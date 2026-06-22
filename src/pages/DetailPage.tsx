@@ -75,7 +75,7 @@ export default function DetailPage() {
     }
 
     return (
-        <form onSubmit={handleSave} className="flex flex-col gap-4 bg-white p-6 rounded-xl shadow-sm">
+        <form onSubmit={handleSave} className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
                 <h2 className="text-lg font-medium">Edit climb</h2>
             </div>
