@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { loadPatterns, savePatterns } from '../api'
 import type { Pattern } from '../types'
 

@@ -9,7 +9,7 @@ export interface Climb {
     photos: string[]
     isProject: boolean
     sentAt?: string
-    patternIds?: string[]
+    patternIds: string[]
 }
 
 export interface Goal {

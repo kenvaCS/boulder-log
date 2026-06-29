@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { usePatternsContext } from '../../../context/PatternsContext'
 import PatternCard from './PatternCard'
 

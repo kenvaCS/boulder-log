@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTrainingContext } from '../../../context/TrainingContext'
+import type { Exercise } from '../types'
 
 const EMPTY_FORM = {
     name: '',
@@ -11,7 +12,7 @@ const STORAGE_KEY = "exerciseFormDraft";
 
 export default function ExerciseForm() {
     const { addExercise, exercises } = useTrainingContext()
-    const [form, setForm] = useState(() => {
+    const [form, setForm] = useState<Omit<Exercise, 'id'>>(() => {
         const draft = localStorage.getItem(STORAGE_KEY)
         return draft ? JSON.parse(draft) : EMPTY_FORM
     })
@@ -37,7 +38,7 @@ export default function ExerciseForm() {
         if (!form.name.trim()) return
         addExercise({
             name: form.name.trim(),
-            ...(form.description.trim() && { description: form.description.trim() }),
+            ...(form.description?.trim() && { description: form.description.trim() }),
             ...(form.rpe !== undefined && { rpe: form.rpe }),
         })
         setForm(EMPTY_FORM)

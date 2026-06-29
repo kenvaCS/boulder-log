@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { loadClimbs, saveClimbs } from '../api'
 import type { Climb } from '../types'
 
 export function useClimbs() {
     const [climbs, setClimbs] = useState<Climb []>(loadClimbs)
 
-    // no use for useEffect
     function addClimb(data: Omit<Climb, 'id'>) {
         const newClimb: Climb = {...data, id: crypto.randomUUID() }
         const updated = [newClimb, ...climbs]

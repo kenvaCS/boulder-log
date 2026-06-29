@@ -14,6 +14,7 @@ const makeClimb = (overrides: Partial<Climb> = {}): Climb => ({
   notes: '',
   photos: [],
   isProject: false,
+  patternIds: [],
   ...overrides,
 })
 

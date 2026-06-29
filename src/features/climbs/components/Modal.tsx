@@ -1,8 +1,7 @@
 import React from 'react'
-import { useNavigate, useParams } from 'react-router'
+import { useNavigate } from 'react-router' //useParams?
 import { createPortal } from 'react-dom'
 import { PatternsProvider } from '../../../context/PatternsContext'
-import { useClimbsContext } from '../../../context/ClimbsContext'
 import DetailPage from '../../../pages/DetailPage' 
 
 type DialogProps = {
@@ -54,7 +53,7 @@ React.useEffect(() => {
               return;
           }
 
-          let activeElement = document.activeElement as HTML | null
+          let activeElement = document.activeElement as HTMLElement | null
           let currentIndex = focusable.indexOf(activeElement ?? focusable[0]);
       
       let nextIndex = currentIndex; 
@@ -119,12 +118,11 @@ export default function Modal() {
   //let { id } = useParams<"id">();
   //let image = getImageById(Number(id))
   let buttonRef = React.useRef<HTMLButtonElement>(null);
-  const { id } = useParams<"id">();
-  const { climbs, deleteClimb } = useClimbsContext();
-  const climb = climbs.find(c => c.id === id)
+  //const { id } = useParams<"id">();
+  //const { climbs, deleteClimb } = useClimbsContext();
+  //const climb = climbs.find(c => c.id === id)
 
-  if (!climb) return null // simply closes modal
-
+  //if (!climb) return null // simply closes modal
   function onDismiss(){
       navigate(-1)
   } 

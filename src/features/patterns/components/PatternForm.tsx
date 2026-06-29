@@ -15,7 +15,7 @@ const STORAGE_KEY = "patternFormDraft"
 
 export default function PatternForm() {
     const { addPattern } = usePatternsContext()
-    const [ form, setForm ] = useState(() => {
+    const [ form, setForm ] = useState<Omit<Pattern, 'id'>>(() => {
         const draft = localStorage.getItem(STORAGE_KEY);
         return draft ? JSON.parse(draft) : EMPTY_FORM
     })

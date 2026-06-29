@@ -14,7 +14,7 @@ vi.mock('../layout/Navbar/NavBar', () => ({ default: () => <nav>NavBar</nav> }))
 
 import App from './App'
 
-function renderAt(initialEntries: Parameters<typeof createMemoryRouter>[1]['initialEntries']) {
+function renderAt(initialEntries: NonNullable<Parameters<typeof createMemoryRouter>[1]>['initialEntries']) {
     const router = createMemoryRouter([{ path: '*', element: <App /> }], { initialEntries })
     return render(<RouterProvider router={router} />)
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTrainingContext } from '../../../context/TrainingContext'
-import type { SessionExercise } from '../types'
+import type { SessionExercise, TrainingSession } from '../types'
 
 const today = new Date().toISOString().split('T')[0]
 
@@ -15,7 +15,7 @@ const STORAGE_KEY="sessionFormDraft";
 
 export default function SessionForm() {
     const { routines, exercises, addSession } = useTrainingContext()
-    const [form, setForm] = useState(() => {
+    const [form, setForm] = useState<Omit<TrainingSession, 'id'>>(() => {
         const draft = localStorage.getItem(STORAGE_KEY)
         return draft ? JSON.parse(draft): EMPTY_FORM
     })

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useClimbsContext } from '../../../context/ClimbsContext'
 import { usePatternsContext } from '../../../context/PatternsContext'
+import type { Climb } from '../types'
 
 const GRADES = ['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17']
 
@@ -23,7 +23,7 @@ const STORAGE_KEY = "climbFormDraft"
 export default function ClimbForm() {
     const { addClimb } = useClimbsContext()
     const { patterns } = usePatternsContext() // reading patterns
-    const [form, setForm] = useState(() => {
+    const [form, setForm] = useState<Omit<Climb, 'id'>>(() => {
         const draft = localStorage.getItem(STORAGE_KEY);
         return draft ? JSON.parse(draft): EMPTY_FORM
     })

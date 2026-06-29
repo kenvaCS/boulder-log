@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import type { RoutineExercise } from '../types'
+import type { RoutineExercise, TrainingRoutine } from '../types'
 
 import { useTrainingContext } from '../../../context/TrainingContext'
 
@@ -21,7 +21,7 @@ const EMPTY_EXERCISE_ROW = {
 
 export default function RoutineForm() {
     const { exercises, addRoutine } = useTrainingContext()
-    const [form, setForm] = useState(() => {
+    const [form, setForm] = useState<Omit<TrainingRoutine, 'id'>>(() => {
         const draft = localStorage.getItem(STORAGE_KEY)
         return draft ? JSON.parse(draft) : EMPTY_FORM
     })

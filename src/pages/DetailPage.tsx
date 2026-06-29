@@ -21,11 +21,12 @@ export default function DetailPage() {
                 grade: climb.grade,
                 date: climb.date,
                 location: climb.location,
-                attempts: climb.attempts, 
+                attempts: climb.attempts,
                 notes: climb.notes,
                 photos: climb.photos,
                 isProject: climb.isProject,
                 sentAt: climb.sentAt,
+                patternIds: climb.patternIds,
             })
         }
     }, [climb])
